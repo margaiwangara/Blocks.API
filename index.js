@@ -1,9 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
+const cors = require('cors');
 const connectDB = require('./models');
 const errorMiddleware = require('./middleware/error');
-const ExceptionHandler = require('./handlers/ExceptionHandler');
 const authRoutes = require('./routes/api/auth');
 
 // init
@@ -14,6 +14,7 @@ dotenv.config({ path: path.resolve(__dirname, 'config/config.env') });
 
 // middleware
 app.use(express.json());
+app.use(cors());
 
 // connect db
 connectDB();
