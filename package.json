@@ -5,13 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "server":"SET NODE_ENV=production && node index.js",
-    "dev":"nodemon index.js"
+    "server": "SET NODE_ENV=production && node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [
-    "blocks",
     "blocks real estate",
-    "real estate api",
+    "real estate api"
   ],
   "author": "Margai Wangara",
   "license": "MIT",
