@@ -4,7 +4,7 @@
   "description": "Real estate API that provides a platform for users to view houses and make enquiries",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "SET NODE_ENV=testing && mocha",
     "server": "SET NODE_ENV=production && node index.js",
     "dev": "nodemon index.js"
   },

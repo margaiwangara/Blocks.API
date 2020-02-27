@@ -8,9 +8,14 @@ const mongoConfig = {
   useUnifiedTopology: true,
 };
 
+// db based on env
+const { NODE_ENV, MONGO_URI, MONGO_URI_TESTING } = process.env;
+
+const DB_URI = NODE_ENV == 'testing' ? MONGO_URI_TESTING : MONGO_URI;
+
 async function ConnectDB() {
   try {
-    const connect = await mongoose.connect(process.env.MONGO_URI, mongoConfig);
+    const connect = await mongoose.connect(DB_URI, mongoConfig);
     console.log(`MongoDB Connected: ${connect.connection.host}`);
   } catch (error) {
     console.log(error);
