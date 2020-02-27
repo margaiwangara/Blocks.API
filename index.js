@@ -4,6 +4,7 @@ const path = require('path');
 const connectDB = require('./models');
 const errorMiddleware = require('./middleware/error');
 const ExceptionHandler = require('./handlers/ExceptionHandler');
+const authRoutes = require('./routes/api/auth');
 
 // init
 const app = express();
@@ -16,6 +17,9 @@ app.use(express.json());
 
 // connect db
 connectDB();
+
+// routes
+app.use('/api/auth', authRoutes);
 
 // error handling
 app.use(function(req, res, next) {
