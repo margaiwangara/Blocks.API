@@ -22,6 +22,7 @@ describe('Authentication', function() {
       .then(() => done())
       .catch(error => done(error));
   });
+
   // register test
   describe('#POST /auth/register', function() {
     it('should register a new user', function(done) {
