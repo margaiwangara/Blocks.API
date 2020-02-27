@@ -8,14 +8,17 @@ const ExceptionHandler = require('../handlers/ExceptionHandler');
  * @access PUBLIC
  */
 exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  if (req.body.role) {
+    req.body.role = undefined;
+  }
 
-  if (!email || !password)
-    return next(
-      new ExceptionHandler('Email and password fields required', 400),
-    );
+  const newUser = await User.create(req.body);
 
-  const newUser = await User.create({ email, password });
+  // generate token
+  const token = newUser.generateJSONWebToken();
 
-  return res.status(201).json(newUser);
+  return res.status(201).json({
+    user: { id: newUser.id, email: newUser.email },
+    token,
+  });
 });
