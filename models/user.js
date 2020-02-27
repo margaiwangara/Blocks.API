@@ -68,6 +68,16 @@ userSchema.pre('save', async function(next) {
   }
 });
 
+userSchema.methods.comparePassword = async function(candidatePassword, next) {
+  try {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+
+    return isMatch;
+  } catch (error) {
+    next(error);
+  }
+};
+
 userSchema.methods.generateJSONWebToken = function(next) {
   try {
     const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
