@@ -4,14 +4,13 @@
   "description": "Real estate API that provides a platform for users to view houses and make enquiries",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "server":"SET NODE_ENV=production && node index.js",
-    "dev":"nodemon index.js"
+    "test": "SET NODE_ENV=testing && mocha",
+    "server": "SET NODE_ENV=production && node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [
-    "blocks",
     "blocks real estate",
-    "real estate api",
+    "real estate api"
   ],
   "author": "Margai Wangara",
   "license": "MIT",
@@ -22,8 +21,10 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.2"
   }
 }
