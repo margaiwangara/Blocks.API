@@ -23,7 +23,7 @@ export const authFormHook = function useAuthForm(path) {
     // dispatch data acquired
     authAction(path, value, dispatch)
       .then(data => console.log(data))
-      .catch(error => console.log(error.message));
+      .catch(error => console.log(error));
   }
 
   return {

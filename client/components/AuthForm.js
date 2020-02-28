@@ -41,6 +41,7 @@ const AuthForm = ({ path: formType, btnText }) => {
         type="password"
         name="password"
         id="passwordField"
+        onChange={handleChange}
         value={value.password}
       />
       <button type="submit">{btnText}</button>
