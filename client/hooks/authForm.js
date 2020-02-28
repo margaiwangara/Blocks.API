@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { AuthContext } from '../context/appContext';
+import authAction from '../context/actions/auth';
 
 const initialState = {
   name: '',
@@ -8,7 +9,7 @@ const initialState = {
   password: '',
 };
 
-export default function useAuthForm() {
+export default function useAuthForm(path) {
   const [value, setValue] = useState(initialState);
   const { dispatch } = useContext(AuthContext);
   // handlechage
@@ -20,5 +21,14 @@ export default function useAuthForm() {
     e.preventDefault();
 
     // dispatch data acquired
+    authAction(path, value, dispatch)
+      .then(data => console.log(data))
+      .catch(error => console.log(error.message));
   }
+
+  return {
+    value,
+    handleChange,
+    handleSubmit,
+  };
 }
