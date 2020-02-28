@@ -18,9 +18,9 @@ function Register() {
     e.preventDefault();
 
     axios
-      .post('/api/auth/register', value)
+      .post('http://localhost:5000/api/auth/register', value)
       .then(({ data }) => console.log(data))
-      .catch(error => console.log(error));
+      .catch(error => console.log(error.response.data.error.message));
   }
   return (
     <form method="POST" onSubmit={handleSubmit}>
