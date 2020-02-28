@@ -1,19 +1,19 @@
 import { AuthProvider } from '../context/appContext';
 import { createGlobalStyle } from 'styled-components';
-import Route from '../containers/Route';
+import Header from '../containers/Header';
 
 function withLayout(Page) {
   return () => (
     <AuthProvider>
       <GlobalStyle />
-      <Route />
+      <Header />
       <Page />
     </AuthProvider>
   );
 }
 
 const GlobalStyle = createGlobalStyle`
-body{
+body {
   --primary: papayawhip;
   --accent: palevioletred;
   margin: 0;
@@ -22,6 +22,12 @@ body{
   max-width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 `;
