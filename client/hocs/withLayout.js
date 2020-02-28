@@ -33,7 +33,6 @@ a {
 }
 
 .error {
-  width: 100%;
   padding: 15px;
   text-align: left;
   color: #000;
@@ -41,7 +40,7 @@ a {
   border-left: solid 3px rgba(255, 0, 0, 0.7);
   border-radius: 10px;
   font-weight: 500;
-  letter-spacing: 0.75px;
+  letter-spacing: 0.5px;
 }
 
 input[type='text'], input[type='email'], input[type='password'] {
