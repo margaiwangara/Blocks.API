@@ -9,7 +9,7 @@ const initialState = {
   password: '',
 };
 
-export default function useAuthForm(path) {
+export const authFormHook = function useAuthForm(path) {
   const [value, setValue] = useState(initialState);
   const { dispatch } = useContext(AuthContext);
   // handlechage
@@ -31,4 +31,4 @@ export default function useAuthForm(path) {
     handleChange,
     handleSubmit,
   };
-}
+};

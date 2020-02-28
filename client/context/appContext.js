@@ -7,7 +7,7 @@ const initialState = {
     isAuthenticated: false,
     user: {},
   },
-  errors: {},
+  error: {},
 };
 
 export const AuthProvider = function({ children }) {
