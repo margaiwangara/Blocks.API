@@ -39,6 +39,7 @@ describe('Authentication', function() {
             .to.be.an('object')
             .and.to.have.keys('email', 'id');
           expect(res.body.token).to.be.a('string');
+          expect(res.body.token.split('.').length).to.eql(3);
           done();
         })
         .catch(error => done(error));
@@ -62,6 +63,7 @@ describe('Authentication', function() {
             .and.to.have.keys('email', 'id');
           expect(res.body.user.email).to.eql(user.email);
           expect(res.body.token).to.be.a('string');
+          expect(res.body.token.split('.').length).to.eql(3);
           done();
         })
         .catch(error => done(error));
