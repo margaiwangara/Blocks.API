@@ -4,8 +4,11 @@ import { authFormHook } from '../hooks/forms';
 
 const AuthForm = ({ path: formType, btnText }) => {
   const { value, handleChange, handleSubmit } = authFormHook(formType);
-  const { state } = useContext(AuthContext);
-
+  const {
+    state: {
+      errorState: { error },
+    },
+  } = useContext(AuthContext);
   return (
     <form method="POST" autoComplete="off" onSubmit={handleSubmit}>
       {formType == 'register' && (
@@ -45,7 +48,7 @@ const AuthForm = ({ path: formType, btnText }) => {
         value={value.password}
       />
       <button type="submit">{btnText}</button>
-      {!!Object.keys(state.error).length && <p>{state.error.message}</p>}
+      {!!Object.keys(error).length && <p>{error.message}</p>}
     </form>
   );
 };
