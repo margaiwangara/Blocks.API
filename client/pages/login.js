@@ -20,4 +20,4 @@ function Login() {
   return <AuthForm path="login" btnText="Login" />;
 }
 
-export default withLayout(Login);
+export default Login;

@@ -20,4 +20,4 @@ function Register() {
   return <AuthForm path="register" btnText="Register" />;
 }
 
-export default withLayout(Register);
+export default Register;
