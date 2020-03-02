@@ -24,16 +24,17 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
+      select: false,
       required: [true, 'Password field is required'],
       match: [
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/,
         'Please enter a valid password, at least one lowercase and uppercase letter and one number',
       ],
       minlength: [6, 'Password length should be at least 6 characters'],
-      select: false,
     },
     role: {
       type: String,
+      select: false,
       enum: ['user', 'admin'],
       default: 'user',
       required: [true, 'Role field is required'],

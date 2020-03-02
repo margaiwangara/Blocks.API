@@ -12,7 +12,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 
   return res.status(200).json({
     success: true,
-    count: users.count,
+    count: users.length,
     data: users,
   });
 });
@@ -37,6 +37,10 @@ exports.getUser = asyncHandler(async (req, res, next) => {
  */
 exports.createUser = asyncHandler(async (req, res, next) => {
   const newUser = await User.create(req.body);
+
+  // clean up
+  newUser.password = undefined;
+  newUser.role = undefined;
 
   return res.status(201).json(newUser);
 });
