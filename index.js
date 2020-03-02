@@ -5,6 +5,7 @@ const cors = require('cors');
 const connectDB = require('./models');
 const errorMiddleware = require('./middleware/error');
 const authRoutes = require('./routes/api/auth');
+const userRoutes = require('./routes/api/user');
 
 // init
 const app = express();
@@ -21,6 +22,7 @@ connectDB();
 
 // routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // error handling
 app.use(function(req, res, next) {

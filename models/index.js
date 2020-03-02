@@ -12,7 +12,7 @@ async function ConnectDB() {
   // db based on env
   const { NODE_ENV, MONGO_URI, MONGO_URI_TESTING } = process.env;
 
-  const DB_URI = NODE_ENV == 'testing' ? MONGO_URI_TESTING : MONGO_URI;
+  const DB_URI = NODE_ENV.trim() == 'testing' ? MONGO_URI_TESTING : MONGO_URI;
   const DEBUG = NODE_ENV == 'development';
   mongoose.set('debug', DEBUG);
   try {
