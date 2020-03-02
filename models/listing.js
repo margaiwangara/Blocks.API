@@ -63,7 +63,7 @@ const listingSchema = new mongoose.Schema(
     },
     photos: [
       {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Photo',
       },
     ],
@@ -72,7 +72,7 @@ const listingSchema = new mongoose.Schema(
       default: true,
     },
     realtor: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Realtor',
     },
   },
