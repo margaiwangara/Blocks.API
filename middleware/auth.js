@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const ExceptionHandler = require('../handlers/ExceptionHandler');
 const User = require('../models/user');
-const asyncHandler = require('../handlers/asyncHandler');
 
 exports.authRequired = async function(req, res, next) {
   let token;
