@@ -1,4 +1,5 @@
 const Listing = require('../models/listing');
+const Realtor = require('../models/realtor');
 const asyncHandler = require('../handlers/asyncHandler');
 const ExceptionHandler = require('../handlers/ExceptionHandler');
 
@@ -33,6 +34,18 @@ exports.getListing = asyncHandler(async (req, res, next) => {
  * @access Private
  */
 exports.createListing = asyncHandler(async (req, res, next) => {
+  // check if realtor exists
+  if (req.body.realtor) {
+    const realtor = await Realtor.findById(req.body.realtor);
+    if (!realtor)
+      return next(
+        new ExceptionHandler(
+          `Realtor with id ${req.body.realtor} not found`,
+          404,
+        ),
+      );
+  }
+
   const newListing = await Listing.create(req.body);
 
   return res.status(201).json(newListing);
@@ -44,6 +57,16 @@ exports.createListing = asyncHandler(async (req, res, next) => {
  * @access Private
  */
 exports.updateListing = asyncHandler(async (req, res, next) => {
+  if (req.body.realtor) {
+    const realtor = await Realtor.findById(req.body.realtor);
+    if (!realtor)
+      return next(
+        new ExceptionHandler(
+          `Realtor with id ${req.body.realtor} not found`,
+          404,
+        ),
+      );
+  }
   const updatedListing = await Listing.findByIdAndUpdate(
     req.params.id,
     req.body,

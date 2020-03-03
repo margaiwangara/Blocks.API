@@ -31,7 +31,6 @@ describe('Authentication', function() {
         .post('/api/auth/register')
         .send(user)
         .then(res => {
-          console.log(res);
           expect(res.status).to.eql(201);
           expect(res.body)
             .to.be.an('object')
@@ -43,10 +42,7 @@ describe('Authentication', function() {
           expect(res.body.token.split('.').length).to.eql(3);
           done();
         })
-        .catch(error => {
-          console.log(error);
-          done(error);
-        });
+        .catch(error => done(error));
     });
   });
 
