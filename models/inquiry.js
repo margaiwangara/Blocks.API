@@ -15,7 +15,7 @@ const inquirySchema = new mongoose.Schema(
     },
     listing: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Realtor',
+      ref: 'Listing',
       required: [true, 'Listing Id is required for an inquiry'],
     },
   },

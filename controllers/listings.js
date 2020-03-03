@@ -92,7 +92,7 @@ exports.deleteListing = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @route PUT /api/listings/:listingId/profile
+ * @route PUT /api/listings/:id/profile
  * @desc Upload profile image for listings
  * @access Private
  */
