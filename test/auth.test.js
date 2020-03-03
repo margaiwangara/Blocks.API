@@ -42,7 +42,10 @@ describe('Authentication', function() {
           expect(res.body.token.split('.').length).to.eql(3);
           done();
         })
-        .catch(error => done(error));
+        .catch(error => {
+          console.log(error);
+          done(error);
+        });
     });
   });
 
@@ -66,7 +69,10 @@ describe('Authentication', function() {
           expect(res.body.token.split('.').length).to.eql(3);
           done();
         })
-        .catch(error => done(error));
+        .catch(error => {
+          console.log(error);
+          done(error);
+        });
     });
   });
 });
