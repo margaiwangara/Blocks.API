@@ -2,9 +2,7 @@ const asyncHandler = require('../handlers/asyncHandler');
 const ExceptionHandler = require('../handlers/ExceptionHandler');
 const Listing = require('../models/listing');
 const Realtor = require('../models/realtor');
-const Photo = require('../models/photo');
-const path = require('path');
-const fse = require('node-fs-extra');
+const fileHandler = require('../handlers/fileHandler');
 
 /**
  * @route GET /api/listings
@@ -109,48 +107,6 @@ exports.uploadProfile = asyncHandler(async (req, res, next) => {
       ),
     );
 
-  // get image
-  if (!req.files)
-    return next(new ExceptionHandler('Please upload a file', 400));
-
-  const profile = req.files.profile;
-
-  // check if image
-  if (!profile.startsWith('image'))
-    return next(new ExceptionHandler('Please upload an image file', 400));
-
-  // check size
-  if (profile.size > process.env.MAX_FILE_SIZE)
-    return next(
-      new ExceptionHandler(
-        `Max file size of ${process.env.MAX_FILE_SIZE} exceeded`,
-        400,
-      ),
-    );
-
-  // upload file
-  profile.name = `${listing._id}_${Date.now()}_${path.parse(profile.name).ext}`;
-
-  // create dir in YYYY/MM/DD structure
-  // ./public/uploads/2020/3/3
-  const date = new Date();
-  const dir = `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`;
-
-  await fse.ensureDir(dir);
-
-  profile.mv(`${process.env.FILE_UPLOAD_PATH}/${dir}`, async err => {
-    if (err) {
-      console.log(err);
-      return next(new ExceptionHandler('File upload failed', 500));
-    }
-
-    await Listing.findByIdAndUpdate(req.params.listingId, {
-      photoMain: `${dir}/${profile.name}`,
-    });
-
-    return res.status(200).json({
-      success: true,
-      path: `${dir}/${profile.name}`,
-    });
-  });
+  // file upload method
+  await fileHandler(listing, req, res, next);
 });
