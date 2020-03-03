@@ -8,13 +8,7 @@ const ExceptionHandler = require('../handlers/ExceptionHandler');
  * @access Private
  */
 exports.getUsers = asyncHandler(async (req, res, next) => {
-  const users = await User.find();
-
-  return res.status(200).json({
-    success: true,
-    count: users.length,
-    data: users,
-  });
+  return res.status(200).json(res.advancedResults);
 });
 
 /**

@@ -10,9 +10,12 @@ const {
   deleteUser,
 } = require('../../controllers/users');
 
+const User = require('../../models/user');
+const advancedResults = require('../../middleware/advancedResults');
+
 router
   .route('/')
-  .get(getUsers)
+  .get(advancedResults(User), getUsers)
   .post(createUser);
 router
   .route('/:id')

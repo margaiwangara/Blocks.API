@@ -4,11 +4,11 @@
   "description": "Real estate API that provides a platform for users to view houses and make enquiries",
   "main": "index.js",
   "scripts": {
-    "start": "SET NODE_ENV=production && node index.js",
+    "start": "export NODE_ENV=production || set NODE_ENV=production && node index.js",
     "client": "npm run dev --prefix client",
     "server": "nodemon index.js",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "test": "SET NODE_ENV=testing && mocha"
+    "test": "export NODE_ENV=testing || set NODE_ENV=testing && mocha"
   },
   "keywords": [
     "blocks real estate",

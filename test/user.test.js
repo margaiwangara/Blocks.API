@@ -23,7 +23,12 @@ describe('User', function() {
         .get('/api/users')
         .then(res => {
           expect(res.status).to.eq(200);
-          expect(res.body).to.have.all.keys('success', 'data', 'count');
+          expect(res.body).to.have.all.keys(
+            'success',
+            'data',
+            'count',
+            'pagination',
+          );
           expect(res.body.success).to.be.true;
           expect(res.body.count).to.be.eql(0);
           expect(res.body.data).to.be.an('array');
