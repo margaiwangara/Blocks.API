@@ -31,6 +31,7 @@ describe('Authentication', function() {
         .post('/api/auth/register')
         .send(user)
         .then(res => {
+          console.log(res);
           expect(res.status).to.eql(201);
           expect(res.body)
             .to.be.an('object')
