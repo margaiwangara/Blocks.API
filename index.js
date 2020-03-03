@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
+const fse = require('fs-extra');
 const connectDB = require('./models');
 const errorMiddleware = require('./middleware/error');
 const authRoutes = require('./routes/api/auth');
@@ -16,6 +18,7 @@ dotenv.config({ path: path.resolve(__dirname, 'config/config.env') });
 // middleware
 app.use(express.json());
 app.use(cors());
+app.use(fileUpload());
 
 // connect db
 connectDB();
@@ -23,6 +26,39 @@ connectDB();
 // routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+
+app.get('/', function(req, res) {
+  return res.sendFile(path.resolve(__dirname, 'public/index.html'));
+});
+
+app.post('/', async function(req, res, next) {
+  if (!req.files) {
+    console.log('No files found');
+  }
+
+  try {
+    const date = new Date();
+    const dir = `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`;
+    await fse.ensureDir(`./public/uploads/${dir}`);
+
+    // upload file
+    const profile = req.files.profile;
+
+    profile.name = `${Date.now()}_${path.parse(profile.name).ext}`;
+
+    profile.mv(`./public/uploads/${dir}/${profile.name}`, async err => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+
+      return res.json({ success: 'It worked' });
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
 // error handling
 app.use(function(req, res, next) {
