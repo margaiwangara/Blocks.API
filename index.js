@@ -8,6 +8,8 @@ const connectDB = require('./models');
 const errorMiddleware = require('./middleware/error');
 const authRoutes = require('./routes/api/auth');
 const userRoutes = require('./routes/api/user');
+const realtorRoutes = require('./routes/api/realtor');
+const listingRoutes = require('./routes/api/listing');
 
 // init
 const app = express();
@@ -26,6 +28,8 @@ connectDB();
 // routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/listings', listingRoutes);
+app.use('/api/realtors', realtorRoutes);
 
 app.get('/', function(req, res) {
   return res.sendFile(path.resolve(__dirname, 'public/index.html'));

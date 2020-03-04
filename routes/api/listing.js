@@ -13,9 +13,12 @@ const {
   deleteListing,
 } = require('../../controllers/listings');
 
+const Listing = require('../../models/listing');
+const advancedResults = require('../../middleware/advancedResults');
+
 router
   .route('/')
-  .get(getListings)
+  .get(advancedResults(Listing), getListings)
   .post(createListing);
 
 router
