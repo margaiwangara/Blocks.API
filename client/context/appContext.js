@@ -1,4 +1,5 @@
 import { createContext, useReducer } from 'react';
+import { ThemeProvider } from 'styled-components';
 import authReducer from './reducers/authReducer';
 import errorReducer from './reducers/errorReducer';
 
@@ -28,4 +29,14 @@ export const AuthProvider = function({ children }) {
       {children}
     </AuthContext.Provider>
   );
+};
+
+const theme = {
+  colors: {
+    primary: 'papayawhip',
+    accent: 'palevioletred',
+  },
+};
+export const AppThemeProvider = function({ children }) {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

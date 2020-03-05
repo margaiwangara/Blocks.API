@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from '../context/appContext';
-import { authFormHook } from '../hooks/forms';
+import { useAuthForm } from '../hooks/forms';
 
 const AuthForm = ({ path: formType, btnText }) => {
-  const { value, handleChange, handleSubmit } = authFormHook(formType);
+  const { value, handleChange, handleSubmit } = useAuthForm(formType);
   const {
     state: {
       errorState: { error },

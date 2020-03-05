@@ -32,7 +32,7 @@ const Navbar = styled.nav`
 `;
 
 const NavbarLink = styled.a`
-  font-weigth: 600;
+  font-weight: 600;
   color: #fff;
   letter-spacing: 0.9;
 
@@ -47,6 +47,7 @@ const NavbarRight = styled.div`
   column-gap: 10px;
   justify-items: start;
 `;
+
 const NavbarBrand = styled(NavbarLink)`
   font-size: 1.2rem;
 `;

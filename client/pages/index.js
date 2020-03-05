@@ -1,8 +1,21 @@
 import React from 'react';
-import withLayout from '../hocs/withLayout';
+import nextCookie from 'next-cookies';
+import Layout from '../containers/Layout';
+import { withAuthSync } from '../hocs/withAuth';
 
-function Homepage() {
-  return <h1>Hello World</h1>;
+function Homepage(props) {
+  console.log('props', props);
+  return (
+    <Layout>
+      <h1>Hello World</h1>
+    </Layout>
+  );
 }
 
-export default Homepage;
+Homepage.getInitialProps = async ctx => {
+  const { token } = nextCookie(ctx);
+
+  console.log(token);
+};
+
+export default withAuthSync(Homepage);

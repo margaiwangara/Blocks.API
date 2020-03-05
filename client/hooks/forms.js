@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { AuthContext } from '../context/appContext';
-import authAction from '../context/actions/auth';
+import { setCurrentUser } from '../context/actions/auth';
 
 const initialState = {
   name: '',
@@ -10,8 +10,7 @@ const initialState = {
   password: '',
 };
 
-export const authFormHook = function useAuthForm(path) {
-  const router = useRouter();
+export const useAuthForm = function(path) {
   const [value, setValue] = useState(initialState);
   const { dispatch } = useContext(AuthContext);
   // handlechage
@@ -23,8 +22,8 @@ export const authFormHook = function useAuthForm(path) {
     e.preventDefault();
 
     // dispatch data acquired
-    authAction(path, value, dispatch)
-      .then(() => console.log('Logged In'))
+    setCurrentUser(path, value, dispatch)
+      .then(() => Router.push('/'))
       .catch(error => console.log(error));
   }
 
