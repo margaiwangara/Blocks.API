@@ -8,7 +8,7 @@
     "client": "npm run dev --prefix client",
     "server": "nodemon index.js",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "test": "export NODE_ENV=testing || set NODE_ENV=testing && mocha \"./test/**/!(auth).test.js\""
+    "test": "export NODE_ENV=testing || set NODE_ENV=testing && mocha""
   },
   "keywords": [
     "blocks real estate",
