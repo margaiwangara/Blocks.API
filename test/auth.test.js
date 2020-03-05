@@ -2,18 +2,15 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../index');
 const User = require('../models/user');
+const {
+  user: { email, password },
+} = require('../data/test.data');
 
 // init
 const expect = chai.expect;
 
 // middleware
 chai.use(chaiHttp);
-
-// test user
-const user = {
-  email: 'testuser@app.com',
-  password: 'TestUser1',
-};
 
 describe('Authentication', function() {
   // clear db before test
@@ -29,7 +26,7 @@ describe('Authentication', function() {
       chai
         .request(server)
         .post('/api/auth/register')
-        .send(user)
+        .send({ email, password })
         .then(res => {
           expect(res.status).to.eql(201);
           expect(res.body)
@@ -52,7 +49,7 @@ describe('Authentication', function() {
       chai
         .request(server)
         .post('/api/auth/login')
-        .send(user)
+        .send({ email, password })
         .then(res => {
           expect(res.status).to.eql(200);
           expect(res.body)
@@ -61,12 +58,15 @@ describe('Authentication', function() {
           expect(res.body.user)
             .to.be.an('object')
             .and.to.have.keys('email', 'id');
-          expect(res.body.user.email).to.eql(user.email);
+          expect(res.body.user.email).to.eql(email);
           expect(res.body.token).to.be.a('string');
           expect(res.body.token.split('.').length).to.eql(3);
           done();
         })
-        .catch(error => done(error));
+        .catch(error => {
+          console.log(error);
+          done(error);
+        });
     });
   });
 });

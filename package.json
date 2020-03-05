@@ -4,11 +4,11 @@
   "description": "Real estate API that provides a platform for users to view houses and make enquiries",
   "main": "index.js",
   "scripts": {
-    "start": "SET NODE_ENV=production && node index.js",
+    "start": "export NODE_ENV=production || set NODE_ENV=production && node index.js",
     "client": "npm run dev --prefix client",
     "server": "nodemon index.js",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "test": "SET NODE_ENV=testing && mocha"
+    "test": "export NODE_ENV=testing || set NODE_ENV=testing && mocha \"./test/**/!(auth).test.js\""
   },
   "keywords": [
     "blocks real estate",
@@ -20,7 +20,8 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "mocha": "^7.1.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "nyc": "^15.0.0"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -28,7 +29,11 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "fs-extra": "^8.1.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.2"
+    "mongoose": "^5.9.2",
+    "morgan": "^1.9.1",
+    "slugify": "^1.4.0"
   }
 }
