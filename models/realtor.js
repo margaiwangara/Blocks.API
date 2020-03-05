@@ -7,17 +7,13 @@ const realtorSchema = new mongoose.Schema(
       required: [true, 'Please enter a realtor name'],
       maxlength: [100, "Realtor's name cannot be more than 100 characters"],
     },
-    description: {
-      type: String,
-      trim: true,
-      required: [true, 'Please enter a realtor description'],
-    },
     email: {
       type: String,
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         'Please add a valid email',
       ],
+      required: [true, 'Please enter an email address'],
     },
     phone: {
       type: String,
