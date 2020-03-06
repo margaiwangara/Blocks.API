@@ -36,6 +36,20 @@ a {
   cursor: pointer;
 }
 
+.nav-link{
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.9;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.9;
+  font-size: 1.2rem;
+}
+
+
 .error {
   padding: 15px;
   text-align: left;

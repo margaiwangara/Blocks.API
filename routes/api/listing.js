@@ -13,20 +13,22 @@ const {
   deleteListing,
 } = require('../../controllers/listings');
 
+// middleware
+const { roleRequired, authRequired } = require('../../middleware/auth');
 const Listing = require('../../models/listing');
 const advancedResults = require('../../middleware/advancedResults');
 
 router
   .route('/')
   .get(advancedResults(Listing), getListings)
-  .post(createListing);
+  .post(authRequired, roleRequired('admin'), createListing);
 
 router
   .route('/:id')
   .get(getListing)
-  .put(updateListing)
-  .delete(deleteListing);
+  .put(authRequired, roleRequired('admin'), updateListing)
+  .delete(authRequired, roleRequired('admin'), deleteListing);
 
-router.post('/:id/profile', uploadProfile);
+router.put('/:id/profile', authRequired, roleRequired('admin'), uploadProfile);
 
 module.exports = router;

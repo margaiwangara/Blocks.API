@@ -6,11 +6,11 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <AppThemeProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <AppThemeProvider>
           <Component {...pageProps} />
-        </AuthProvider>
-      </AppThemeProvider>
+        </AppThemeProvider>
+      </AuthProvider>
     );
   }
 }

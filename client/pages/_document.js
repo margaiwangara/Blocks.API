@@ -23,6 +23,8 @@ class MyDocument extends Document {
           </>
         ),
       };
+    } catch (error) {
+      console.log(error);
     } finally {
       sheet.seal();
     }

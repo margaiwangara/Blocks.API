@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const listingSchema = new mongoose.Schema(
   {
@@ -80,6 +81,11 @@ const listingSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+listingSchema.pre('save', function(next) {
+  this.slug = slugify(this.title, { lowercase: true });
+  next();
+});
 
 const Listing = mongoose.model('Listing', listingSchema, 'listings');
 

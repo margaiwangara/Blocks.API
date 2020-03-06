@@ -5,17 +5,17 @@ function Header() {
   return (
     <Navbar>
       <Link href="/">
-        <NavbarBrand>Blocks</NavbarBrand>
+        <a className="navbar-brand">Blocks</a>
       </Link>
       <NavbarRight>
         <Link href="/">
-          <NavbarLink>Home</NavbarLink>
+          <a className="nav-link">Home</a>
         </Link>
         <Link href="/register">
-          <NavbarLink>Register</NavbarLink>
+          <a className="nav-link">Register</a>
         </Link>
         <Link href="/login">
-          <NavbarLink>Login</NavbarLink>
+          <a className="nav-link">Login</a>
         </Link>
       </NavbarRight>
     </Navbar>

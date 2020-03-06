@@ -1,7 +1,16 @@
 import { SET_CURRENT_USER, REMOVE_CURRENT_USER } from '../actionTypes';
-import { apiService } from '../../services/request';
+import { apiService, setTokenHeader } from '../../services/request';
 import { addError, removeError } from './error';
 import cookie from 'js-cookie';
+
+export const passCurrentUser = user => ({
+  type: SET_CURRENT_USER,
+  currentUser: {
+    user,
+  },
+});
+
+export const setAuthorizationToken = token => setTokenHeader(token);
 
 export const setCurrentUser = function(path, payload, dispatch) {
   const { authDispatch, errorDispatch } = dispatch;
@@ -11,13 +20,9 @@ export const setCurrentUser = function(path, payload, dispatch) {
         // store token in localstorage
         window.localStorage.setItem('token', token);
         cookie.set('token', token, { expires: 30 });
+        setAuthorizationToken(token);
         // dispatch user
-        authDispatch({
-          type: SET_CURRENT_USER,
-          currentUser: {
-            user,
-          },
-        });
+        authDispatch(passCurrentUser(user));
         errorDispatch(removeError());
         resolve();
       })
@@ -31,10 +36,12 @@ export const setCurrentUser = function(path, payload, dispatch) {
 export const removeCurrentUser = function(dispatch) {
   // remove cookie
   cookie.remove('token');
-  window.localStorage.removeItem('token');
+  window.localStorage.clear();
   window.localStorage.setItem('logout', Date.now());
   // dispatch logout
-  return dispatch({
+  passCurrentUser({});
+  dispatch({
     type: REMOVE_CURRENT_USER,
   });
+  return;
 };

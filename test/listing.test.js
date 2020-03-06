@@ -3,7 +3,13 @@ const chaiHttp = require('chai-http');
 const server = require('../index');
 const Listing = require('../models/listing');
 const Realtor = require('../models/realtor');
-const { listing, realtor } = require('../data/test.data');
+const User = require('../models/user');
+
+const {
+  listing,
+  realtor,
+  user: { email, password },
+} = require('../data/test.data');
 
 // init
 const expect = chai.expect;
@@ -36,14 +42,49 @@ describe('Listing', function() {
           .catch(error => done(error));
       });
     });
+
+    // create user for token
+    describe('create new user', function() {
+      it('should clear the user collection', function(done) {
+        User.deleteMany({})
+          .then(() => done())
+          .catch(error => done(error));
+      });
+
+      it('should create new admin user for testing', function(done) {
+        User.create({ email, password, role: 'admin' })
+          .then(() => done())
+          .catch(error => done(error));
+      });
+    });
   });
 
-  // delete realtor after use
-  after(function(done) {
-    Realtor.deleteMany({})
-      .then(() => done())
+  // before each get token
+  beforeEach(function(done) {
+    // call login route
+    chai
+      .request(server)
+      .post('/api/auth/login')
+      .send({ email, password })
+      .then(res => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.all.keys('token', 'user');
+
+        // store token
+        this.token = res.body.token;
+
+        done();
+      })
       .catch(error => done(error));
   });
+
+  // // delete realtor after use
+  // after(function(done) {
+  //   Realtor.deleteMany({})
+  //     .then(() => done())
+  //     .catch(error => done(error));
+  // });
 
   // Create listing
   describe('#POST /listings', function() {
@@ -51,12 +92,12 @@ describe('Listing', function() {
       chai
         .request(server)
         .post('/api/listings')
+        .set('Authorization', `Bearer ${this.token}`)
         .send(listing)
         .then(res => {
           expect(res.status).to.be.eql(201);
           expect(res.body).to.be.an('object');
           expect([res.body].length).to.be.eql(1);
-
           done();
         })
         .catch(error => done(error));
@@ -109,6 +150,7 @@ describe('Listing', function() {
       chai
         .request(server)
         .put(`/api/listings/${listing._id}`)
+        .set('Authorization', `Bearer ${this.token}`)
         .send(updatedListing)
         .then(ul => {
           expect(ul.status).to.be.eql(200);
@@ -128,6 +170,7 @@ describe('Listing', function() {
       chai
         .request(server)
         .delete(`/api/listings/${listing._id}`)
+        .set('Authorization', `Bearer ${this.token}`)
         .then(dl => {
           expect(dl.status).to.be.eql(200);
           expect(dl.body).to.be.an('object');

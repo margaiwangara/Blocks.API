@@ -10,7 +10,7 @@ exports.authRequired = async function(req, res, next) {
     return next(new ExceptionHandler('Invalid credentials', 401));
 
   // starts with bearer
-  if (authorization.startWith('Bearer')) {
+  if (authorization.startsWith('Bearer')) {
     // split
     token = authorization.split(' ')[1];
   }
@@ -26,7 +26,7 @@ exports.authRequired = async function(req, res, next) {
     if (!decoded) return next(new ExceptionHandler('Invalid credentials', 401));
 
     // get user and add to req
-    const user = await User.findById(decoded.id);
+    const user = await User.findById(decoded.id).select('+role');
 
     if (!user) return next(new ExceptionHandler('Invalid credentials', 401));
 
