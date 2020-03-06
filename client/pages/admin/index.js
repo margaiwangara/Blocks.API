@@ -4,7 +4,9 @@ import Layout from '../../containers/Layout';
 function Dashboard() {
   return (
     <Layout>
-      <h1>Dashboard</h1>
+      <h1>Authentication</h1>
+
+      <h1>Application</h1>
     </Layout>
   );
 }
