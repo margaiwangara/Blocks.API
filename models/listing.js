@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const geocoder = require('../utils/geocoder');
 
 const listingSchema = new mongoose.Schema(
   {
@@ -38,7 +39,10 @@ const listingSchema = new mongoose.Schema(
       city: String,
       state: String,
       zipcode: String,
-      country: String,
+      country: {
+        code: String,
+        name: String,
+      },
     },
     price: {
       type: Number,
@@ -82,6 +86,31 @@ const listingSchema = new mongoose.Schema(
   },
 );
 
+listingSchema.pre('save', async function(next) {
+  try {
+    const response = await geocoder.geocode(this.address);
+    const data = response[0];
+
+    // check if loc exists
+    if (!data) return next();
+
+    this.location = {
+      type: 'Point',
+      coordinates: [data.longitude, data.latitude],
+      formattedAddress: data.formattedAddress,
+      city: data.city,
+      state: data.state,
+      zipcode: data.zipcode,
+      country: {
+        code: data.countryCode,
+        name: data.country,
+      },
+    };
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 listingSchema.pre('save', function(next) {
   this.slug = slugify(this.title, { lowercase: true });
   next();
